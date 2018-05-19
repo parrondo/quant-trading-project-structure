@@ -1,0 +1,91 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Reproducibility is the name of the game &#8212; quant-trading-project-structure  documentation</title>
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting started" href="getting.html" />
+    <link rel="prev" title="Quant Trading Project Structure" href="index.html" /> 
+  </head><body>
+      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
+          <span>quant-trading-project-structure  documentation</span></a></h1>
+        <h2 class="heading"><span>Reproducibility is the name of the game</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="index.html">Quant Trading Project Structure</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="getting.html">Getting started</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="reproducibility-is-the-name-of-the-game">
+<h1>Reproducibility is the name of the game<a class="headerlink" href="#reproducibility-is-the-name-of-the-game" title="Permalink to this headline">¶</a></h1>
+<p>There are two basic reasons to make your research reproducible. The first is <strong>to show evidence of the correctness of your results</strong>. The second one  is <strong>to enable others to make use of our methods and results</strong>.
+So to achieve it we need to recognize that:</p>
+<blockquote>
+<div><ul class="simple">
+<li>A well-defined standard project structure means that a newcomer can begin to understand an analysis without having to look into an extensive documentation.</li>
+<li>It also means that you do not necessarily have to read 100% of the code before you know where to look for very specific things.</li>
+<li>A well-organized code tends to self-document, since the organization itself provides the context for its code without too much overhead.</li>
+<li>Your team collaborates more easily with you on this analysis</li>
+<li>Learn yourself from your analysis about the research process</li>
+<li>Feel more confident in the conclusions of the project</li>
+</ul>
+</div></blockquote>
+<div class="section" id="you-will-get-what-you-put-provenance">
+<h2>You will get what you put: Provenance<a class="headerlink" href="#you-will-get-what-you-put-provenance" title="Permalink to this headline">¶</a></h2>
+<p>The term “data provenance” refers to a record that explains the origin of a piece of data (in a database, document or repository) along with an explanation of how and why it arrived at the current location. Trading quants need the provenance like the trees the sunlight.</p>
+<p><em>Example</em>: In an application like quantitative strategies, a lot of data is derived from public databases or brokers, which in turn might be derived from papers but after some clearing and transformations (only the most significant data are put into the public database), which are derived from data markets. A good provenance record will keep the whole history for each piece of data.
+Here are some questions we have learned to ask with a sense of existential fear:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Are we supposed to go in and join the feature column X to the data before we get started (raw data) or did that come from one of our notebooks?</li>
+<li>Come to think of it, which notebook do we have to run first before running the plotting code: was it “process data” or “clean data”?</li>
+<li>Where did the shapefiles get downloaded from for the price plots?</li>
+<li>Etceter, etcetera, …</li>
+</ul>
+</div></blockquote>
+<p>These types of questions are painful and are symptoms of a disorganized, foolish project. A good project structure encourages practices that make it easier to come back to old work.
+You should make sure tha it is clear on how you came to certain conclusions. Just because something makes sense to you, it is not clear that it does for others (yourself next month). When making claims based on your analysis, you must link them to the data on which you base them. This is to ensure that you or others who read your work can easily follow the steps you took from the data to the conclusions. Having a complete context makes it easy to understand the work process and relate to it by reproducing it.</p>
+<p>Another benefit is that all raw data remains available to you and, if you wish, for others, to access and consult. This helps transparency and, again, makes it easier for others to understand your workflow.</p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="index.html">Quant Trading Project Structure</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="getting.html">Getting started</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Parrondo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+    </div>
+  </body>
+</html>

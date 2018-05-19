@@ -1,0 +1,291 @@
+=======================================
+Reproducibility is the name of the game
+=======================================
+
+There are two basic reasons to make your research reproducible. The first is **to show evidence of the correctness of your results**. The second one  is **to enable others to make use of our methods and results**.
+So to achieve it we need to recognize that:
+ * A well-defined standard project structure means that a newcomer can begin to understand an analysis without having to look into an extensive documentation.
+ * It also means that you do not necessarily have to read 100% of the code before you know where to look for very specific things.
+ * A well-organized code tends to self-document, since the organization itself provides the context for its code without too much overhead. 
+ * Your team collaborates more easily with you on this analysis 
+ * Learn yourself from your analysis about the research process
+ * Feel more confident in the conclusions of the project 
+
+
+
+Environment Setup
+=================
+Sphinx is a python based tool, all relevant installation will go through :code:`pip`. In general, we need to:
+ * install sphinx core
+ * install sphinx theme (for not sphinx builtin themes, example used here is Flask-Sphinx-Themes, change it as you want)
+ * install a *MarkDown* parser
+
+.. code-block :: bash
+
+    $ pip install sphinx==1.5.6
+    $ pip install Flask-Sphinx-Themes (*optional, for not sphinx builtin themes, is only an example!*)
+    $ pip install recommonmark
+
+.. note ::
+    
+    Flask-Sphinx-Themes is only an example to ilustrate not sphinx builtin themes, change it as you want.
+
+    since :code:`recommonmark` MarkDown parser has a poor support with sphinx 1.6+. Use sphinx 1.5+ before :code:`recommonmark` support sphinx 1.6+
+
+A recommended way to install these packages is putting them into an :code:`environment.yml` file under project root directory. See `Creating an environment from an environment.yml file`_
+
+.. code-block :: bash
+
+    name: sphinx
+    dependencies:
+      - python=3.5   # or 2.7
+      - pip:
+        - sphinx==1.5.6
+        - Flask-Sphinx-Themes *(optional, is only an example!)*
+        - recommonmark
+
+and execute:
+
+.. code-block :: bash
+
+    $ conda env create --file environment.yml
+    $ source activate sphinx
+
+
+Sphinx Configuration
+====================
+
+Initial Sphinx Set up
+---------------------
+
+for initial set up of sphinx folders, execute:
+
+.. code-block :: bash
+
+    (sphinx)$ sphinx-quickstart
+
+this command will guide you initial set up of sphinx document source folder. Most of options can be left default, except a *GithubPage* option should be set to True.
+
+.. _gitignore:
+
+Add some folder to gitignore
+-----------------------------
+
+After finishing setup, some build folders should be ignored during git commit. By default, these folders are
+
+.. code-block :: bash
+
+    # sphinx document build folders
+    path_to_sphinx_root/_build/
+    path_to_sphinx_root/_static/
+    path_to_sphinx_root/_templates/
+
+
+After finishing initial setup, open and modify :code:`conf.py`.
+
+Add not sphinx builtin themes if necessary
+------------------------------------------
+
+1. for example, import Flask sphinx theme library
+
+.. code-block :: python
+
+    import Flask-Sphinx-Themes
+
+2. set sphinx theme to Flask
+
+.. code-block :: python
+
+    html_theme = "Flask-Sphinx-Themes"
+    html_theme_path = [Flask-Sphinx-Themes.get_html_theme_path()]
+
+3. set sphinx theme option
+
+.. code-block :: python
+
+    html_theme_options = {
+        'github_ribbon_color': darkblue_121621,
+    }
+    
+for more Flask Sphinx theme settings, see `Sphinx Flask github repo`_
+
+
+Add Sphinx MarkDown Support
+---------------------------
+
+1. import markdown parser library
+
+.. code-block :: python
+
+    from recommonmark.parser import CommonMarkParser
+    from recommonmark.transform import AutoStructify
+
+2. Change :code:`source_suffix` to following to make parser recognize markdown files
+
+.. code-block :: python
+
+    source_suffix = ['.rst', '.md']
+    
+3. add following configuration to make use of markdown parser
+    
+.. code-block :: python 
+
+    source_parsers = {
+        '.md': CommonMarkParser,
+    }
+    
+    def setup(app):
+        app.add_config_value('recommonmark_config', {
+            'enable_eval_rst': True,
+        }, True)
+        app.add_transform(AutoStructify)
+
+if you want to modify setup of recommonmark markdown parser, refer to `Recommonmark Documentation`_
+
+
+Index.rst setup
+---------------
+
+Although :code:`recommonmark` support sphinx markdown parsing, it still lack of some functionality. One of them is :code:`toctree` which allow you to see documentation structure on the left-hand side of webpage. To enable :code:`toctree`, we need to write index file in :code:`rst` format. The :code:`index.rst` will contain only documentation title (automatically generated during initial setup) and files need to contain in the :code:`toctree` sections. a sample format is as below
+
+
+.. code-block :: rst
+
+    .. toctree::
+       :glob:
+       :caption: section title
+       
+       docs_folder_name/*
+       doc_file_name1.md
+       doc_file_name2.rst
+
+As code sample above, document files can be found with regular expression pattern matching. This is accomplished by :code:`:glob:` attribute. It avoids adding document file name to index every time a new file is created, but files that failed in pattern matching still need to be added manually. For more information of how to write :code:`toctree`, see `Sphinx TOC tree Docs`_
+
+
+Write Documentation
+===================
+
+Make your text as literal and specific as possible. Put yourself in the place of the person who is using your project 
+and looking for instructions on performing a task. Don't make them guess, but spell 
+out every step in order, and tell exactly what buttons to click or what form 
+fields to fill out. Give complete information; for example, when using a 
+time variable be sure to say if it is in seconds, miliseconds or some other unit value.
+
+Generally, writing :code:`rst` format documents is recommended for sphinx. If you want still using **markdown**. Following some rules to make sphinx parser generate :code:`toctree` correctly.
+
+Use Apendix templates to write your text.
+
+Locally View Documentation
+==========================
+
+Before pushing your documents to repository, viewing them locally to make sure it displays as expected and check no any typo. To do so, simply execute following command in sphinx root directory where Makefile file lives (not project root directory)
+
+.. code-block :: bash
+
+    $ make html
+
+if you didn't change settings during initial setup, a folder named :code:`_build` will show up, inside this folder, there is a :code:`html` folder. Open :code:`index.html` and you should be able to view documentation webpage locally.
+
+.. note ::
+
+    When you modify some files and rebuild documentation page, but didn't see any changes, clean temperary build files by running 
+    
+    .. code-block :: bash
+    
+        $ make clean
+
+
+Deploy to Github Page
+=====================
+
+Since obtaining Sphinx Documentation requires a build step, there are several ways to deploy built sphinx page to Github page. The msimplest is to use `git-simple`_ . Another one is built locally yourself and push. An finally, other is using some automatic built services (like Travis-CI) which will automatically build and deploy for you.
+
+First option: Deploy by git-simple
+----------------------------------
+
+You can deploy easily your gh-pages docs using gpublish command from `git-simple`_
+You only need to install git-simple shell scripts (very easy and clean)
+
+Second option: Locally built and deploy by push
+-----------------------------------------------
+
+Deploy by github push needs 6 steps:
+
+1. create a :code:`source` directory inside docs folder of repo root directory and move everything in sphinx root to new folder
+
+2. allow git to track sphinx temp file by removing these lines shown gitignore_ section
+
+3. Change Sphinx build path to parent directory of sphinx root directory by changing two lines in :code:`Makefile` and :code:`make.bat`:
+
+.. code-block:: bash
+
+    # in Makefile
+    BUILDDIR=_build        ->       BUILDDIR=..
+    # in make.bat
+    set BUILDDIR=_build    ->       set BUILDDIR=..
+
+4. execute following command to move files to docs folder in *root docs directory*
+
+.. code-block :: bash
+
+    $ mv html/* ./
+
+.. note ::
+
+    if this command reports error, there are several possibilities:
+
+    1. didn't build document with :code:`make html`
+    2. execute in wrong directory.
+    3. may need to clean the *root docs directory*, only leave *source* folder there and *html* folder there
+
+5. commit every change in docs folder and push it to github
+
+6. (only needs to be done once) change github repo github page settings, make source to be *master branch /docs folder*
+
+
+Third option: Deploy with Travis-CI
+-----------------------------------
+
+Deploy with Travis-CI basically needs 4 steps:
+
+1. modify :code:`.travis.yml` configuration by adding the following (only works in python environment). For more information about travis github page deployment, see `Travis Configuration`_
+
+.. code-block :: bash
+
+    install:            # Install requirement as "Environment Setup Section"
+    - pip install -r sphinx_root/requirements.txt
+    script:             # build sphinx document
+    - cd sphinx_root/
+    - make html
+    - cd -
+    deploy              # deploy to github page
+    - provider: pages
+      skip_cleanup: true
+      local_dir: sphinx_root/_build/html
+      github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
+
+
+2. Obtain Github personal token. 
+   This Token can be anyone who has access right to Repository. To obtain this token, Go to personal Github settings, At very end of left column, click *personal access tokens* and create a new one. With regards to Scope option during token creation, only :code:`public_repo` should be selected for safety.  Put this token in Travis-CI environment variable settings with name corresponding to travis script
+
+.. note::
+    
+    Whoever use their own *personal access token*, every auto deployment commit will be treated as their commit. For a team, it's recommended to use tokens from organization
+
+3. Change repository settings
+   repository manager should change github page source to branch :code:`gh-pages` branch. This branch will be created during auto deployment by default. 
+
+.. note::
+
+    :code:`gh-pages` branch can't be a protected branch, otherwise, Travis-CI won't be able to push to repository.
+
+
+
+.. _`Sphinx Official Website`: http://www.sphinx-doc.org
+.. _`Sphinx flask github repo`: https://github.com/rtfd/Flask-Sphinx-Themes
+.. _`Recommonmark Documentation`: https://recommonmark.readthedocs.io/en/latest/
+.. _`Sphinx TOC tree Docs`: http://www.sphinx-doc.org/en/stable/markup/toctree.html
+.. _`rst reference`: http://docutils.sourceforge.net/docs/user/rst/quickref.html
+.. _`Travis Configuration`: https://docs.travis-ci.com/user/deployment/pages/
+.. _`Creating an environment from an environment.yml file`: https://conda.io/docs/user-guide/tasks/manage-environments.html
+.. _`git-simple`: https://github.com/parrondo/git-simple

@@ -1,0 +1,222 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Getting started &#8212; quant-trading-project-structure  documentation</title>
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The resulting directory structure" href="structure.html" />
+    <link rel="prev" title="Reproducibility is the name of the game" href="reproducibility.html" /> 
+  </head><body>
+      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
+          <span>quant-trading-project-structure  documentation</span></a></h1>
+        <h2 class="heading"><span>Getting started</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="reproducibility.html">Reproducibility is the name of the game</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="structure.html">The resulting directory structure</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="getting-started">
+<h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>We’ve created a data science like bash script for linux to start the template for projects in Python. This script contains the three above template types. Your analysis doesn’t have to be in Python, but the templates do provide some Python boilerplates.</p>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Python 2.7 or 3.5</li>
+<li><a class="reference external" href="http://cookiecutter.readthedocs.org/en/latest/installation.html">cookiecutter Python package</a> &gt;= 1.4.0: pip install cookiecutter</li>
+<li>Linux OS (We use Centos 7 but whatever you want will do the job)</li>
+</ul>
+</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>name: sphinx
+dependencies:
+  - <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.5   <span class="c1"># or 2.7</span>
+  - pip:
+    - <span class="nv">sphinx</span><span class="o">==</span><span class="m">1</span>.5.6
+    - Flask-Sphinx-Themes *<span class="o">(</span>optional, is only an example!<span class="o">)</span>*
+    - recommonmark
+</pre></div>
+</div>
+<p>and execute:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda env create --file environment.yml
+$ <span class="nb">source</span> activate sphinx
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-script">
+<h2>The Script<a class="headerlink" href="#the-script" title="Permalink to this headline">¶</a></h2>
+<p>In the <strong>new_project.sh</strong> script there are simple instructions to start a new project from scratch.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1">#2018, Parrondo https://github.com/parrondo/quant-trading-project-structure</span>
+<span class="c1">#Starting a new project is as easy as running this command at the command line. No need to create a directory first,</span>
+<span class="c1">#the cookiecutter will do it for you.</span>
+
+<span class="c1">#Conda python environment activation where cookiecutter lives.</span>
+<span class="nb">source</span> activate cookiecutter
+
+
+
+<span class="nb">echo</span> -e <span class="s2">&quot;What kind of new project do you want? \nData-Science [ds] \nDeepLearning [dl] \nData-Science-Luigi [lu] \nSphinx [sp]: &quot;</span>
+<span class="nb">read</span> answer
+<span class="k">case</span> <span class="nv">$answer</span> in
+
+        ds<span class="p">|</span>Ds<span class="p">|</span>dS<span class="p">|</span>DS<span class="o">)</span>
+                <span class="nb">echo</span> <span class="s2">&quot;Agreed, you want a Data-Science new project&quot;</span>
+                <span class="c1">#Creating files and project folder structure with cookiecutter-data-science</span>
+                cookiecutter https://github.com/drivendata/cookiecutter-data-science
+                <span class="p">;;</span>
+
+        dl<span class="p">|</span>Dl<span class="p">|</span>dL<span class="p">|</span>DL<span class="o">)</span>
+                <span class="nb">echo</span> <span class="nb">echo</span> <span class="s2">&quot;Agreed, you want a DeepLearning new project&quot;</span>
+                <span class="c1">#Creating files and project folder structure with cookiecutter-deeplearning</span>
+                cookiecutter https://github.com/tdeboissiere/cookiecutter-deeplearning.git
+                <span class="p">;;</span>
+
+        lu<span class="p">|</span>Lu<span class="p">|</span>lU<span class="p">|</span>LU<span class="o">)</span>
+                <span class="nb">echo</span> <span class="s2">&quot;Agreed, you want a Data-Science with Luigi new project&quot;</span>
+                cookiecutter https://github.com/ffmmjj/luigi_data_science_project_cookiecutter
+                <span class="p">;;</span>
+
+        sp<span class="p">|</span>Sp<span class="p">|</span>sP<span class="p">|</span>SP<span class="o">)</span>
+                <span class="nb">echo</span> <span class="s2">&quot;Agreed, you want a Sphinx documentation new project&quot;</span>
+                cookiecutter https://github.com/carschar/cookiecutter-sphinx.git
+                <span class="p">;;</span>
+
+        *<span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;Invalid input&quot;</span>
+            <span class="p">;;</span>
+<span class="k">esac</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="starting-a-new-project">
+<h2>Starting a new project<a class="headerlink" href="#starting-a-new-project" title="Permalink to this headline">¶</a></h2>
+<p>Starting a new project is as easy as running this command at the command line. No need to create a directory first, the cookiecutter you select in the dialog will do it for you. Remember to change the file new_project.sh as executable file, also you’ll place the file into the parent folder of the new project structure. Then, execute:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./new_project.sh
+</pre></div>
+</div>
+<p>this command will create <em>my_project</em> structure (see example below)</p>
+</div>
+<div class="section" id="example-of-directory-structure-data-science-type-project">
+<h2>Example of Directory structure (Data Science type project)<a class="headerlink" href="#example-of-directory-structure-data-science-type-project" title="Permalink to this headline">¶</a></h2>
+<p>After finishing setup, some build folders should be ignored during git commit. By default, these folders are</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">The resulting directory structure</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="data-is-immutable">
+<h2>Data is immutable<a class="headerlink" href="#data-is-immutable" title="Permalink to this headline">¶</a></h2>
+<p>Don’t ever edit your carefully and usually expensive downloaded raw data, especially not manually, and especially not in Excel or whatever whorksheet. Don’t overwrite your raw data ever. Don’t save multiple versions of the raw data. Treat the data (and its format) as immutable. The code you write should move the raw data through a pipeline to your final analysis (Luigi is perfect for this task). You shouldn’t have to run all of the steps every time you want to make a new figure, but anyone should be able to reproduce the final products with only the code in <strong>src</strong> and the data in <strong>data/raw</strong>.</p>
+<p>Also, if data is immutable, it doesn’t need source control in the same way that code does. Therefore, <strong>by default, the data folder is included in the .gitignore file</strong>. If you have a small amount of data that rarely changes, you may want to include the data in the repository. Github currently warns if files are over 50MB and rejects files over 100MB.</p>
+</div>
+<div class="section" id="notebooks-are-for-exploration-and-communication">
+<h2>Notebooks are for exploration and communication<a class="headerlink" href="#notebooks-are-for-exploration-and-communication" title="Permalink to this headline">¶</a></h2>
+<p>Notebook packages like the Jupyter notebook, are very effective for exploratory data analysis. However, these tools can be less effective for reproducing an analysis. When we use notebooks in our work, we identify the notebooks files. For example, 01-ram-exploratory.ipynb contains initial explorations, whereas 01-ram-reports.ipynb is final work that can be exported as html to the reports directory.
+Since notebooks are challenging objects for source control (e.g., diffs of the json are often not human-readable and merging is near impossible), we recommended not collaborating directly with others on Jupyter notebooks. There are two steps we recommend for using notebooks effectively:</p>
+<ol class="arabic simple">
+<li>Follow a naming convention that shows the owner and the order the analysis
+was done in. We use the format:
+&lt;step&gt;-&lt;user&gt;-&lt;description&gt;.ipynb (e.g., “01-ram-data-preparation.ipynb”, “03-ram-returns-visualization.ipynb”).</li>
+<li>Refactor the good parts. Don’t write code to do the same task in multiple notebooks.
+If it’s a data preprocessing task, put it in the pipeline at src/data/make_dataset.py
+and load data from data/interim.</li>
+</ol>
+</div>
+<div class="section" id="build-from-a-conda-environment">
+<h2>Build from a Conda environment<a class="headerlink" href="#build-from-a-conda-environment" title="Permalink to this headline">¶</a></h2>
+<p>The first step in reproducing an analysis is always reproducing the computational environment it was run in. You need the same tools, the same libraries, and the same versions to make everything play nicely together.
+One effective approach to this is use <a class="reference external" href="https://conda.io/docs/index.html">Anaconda</a>. By listing all of your requirements in the repository (it is include a requirements.txt file) you can easily track the packages needed to recreate the analysis. Here is an example of  good workflow:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">1</span>. $ conda create --name myenv <span class="o">(</span>when creating a new project<span class="o">)</span>
+<span class="m">2</span>. $ <span class="nb">source</span> activate myenv <span class="o">(</span>to activate the environtment<span class="o">)</span>
+<span class="m">3</span>. <span class="o">(</span>myenv<span class="o">)</span>$ pip install the packages that your analysis needs
+<span class="m">4</span>. Run pip freeze &gt; requirements.txt <span class="o">(</span>to pin the exact package versions used to recreate the analysis<span class="o">)</span>
+<span class="m">5</span>. If you find you need to install another package:
+   run pip freeze &gt; requirements.txt again and commit the changes to version control.
+</pre></div>
+</div>
+<p>Usually you have more complex requirements for recreating your environment, then you should consider a virtual machine based approach such as <a class="reference external" href="https://www.docker.com/">Docker</a> or <a class="reference external" href="https://www.vagrantup.com/">Vagrant</a>. Both of these tools use text-based formats (Dockerfile and Vagrantfile respectively) you can easily add to source control to describe how to create a virtual machine with the requirements you need. Once you are familiarized with this virtual machine techniques, they works like a charm.</p>
+<p>If you need orchestration then us <a class="reference external" href="http://kubernetes.io/">Kubernetes</a>, <a class="reference external" href="http://mesos.apache.org/">Mesos</a>, and <a class="reference external" href="https://www.docker.com/products/docker-swarm">Docker Swarm</a>. These last ones are more for production scale and so, out of the scope of this document.</p>
+</div>
+<div class="section" id="secrets-and-configuration-should-be-kept-out-of-version-control">
+<h2>Secrets and configuration should be kept out of version control<a class="headerlink" href="#secrets-and-configuration-should-be-kept-out-of-version-control" title="Permalink to this headline">¶</a></h2>
+<p>You really don’t want to leak your username and password on Github. Here’s how to do this:</p>
+<div class="section" id="store-your-secrets-and-config-variables-in-a-special-file">
+<h3>Store your secrets and config variables in a special file<a class="headerlink" href="#store-your-secrets-and-config-variables-in-a-special-file" title="Permalink to this headline">¶</a></h3>
+<p>Create a .env file in the project root folder. Thanks to the .gitignore, this file should never get committed into the version control repository. Here’s an example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># example .env file</span>
+<span class="nv">DATABASE_URL</span><span class="o">=</span>mongodb://username:password@localhost:5432/dbname
+<span class="nv">AWS_ACCESS_KEY</span><span class="o">=</span>myaccesskey
+<span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span>mysecretkey
+<span class="nv">OTHER_VARIABLE</span><span class="o">=</span>something
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-a-package-to-load-these-variables-automatically">
+<h3>Use a package to load these variables automatically<a class="headerlink" href="#use-a-package-to-load-these-variables-automatically" title="Permalink to this headline">¶</a></h3>
+<p>If you look at the stub script in <em>src/data/make_dataset.py</em>, it uses a package called <a class="reference external" href="https://github.com/theskumar/python-dotenv">python-dotenv</a> to load up all the entries in this file as environment variables so they are accessible with os.environ.get. Here’s an example snippet adapted from the python-dotenv documentation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># src/data/dotenv_example.py</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span><span class="p">,</span> <span class="n">find_dotenv</span>
+
+<span class="c1"># find .env automagically by walking up directories until it&#39;s found</span>
+<span class="n">dotenv_path</span> <span class="o">=</span> <span class="n">find_dotenv</span><span class="p">()</span>
+
+<span class="c1"># load up the entries as environment variables</span>
+<span class="n">load_dotenv</span><span class="p">(</span><span class="n">dotenv_path</span><span class="p">)</span>
+
+<span class="n">database_url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;DATABASE_URL&quot;</span><span class="p">)</span>
+<span class="n">other_variable</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;OTHER_VARIABLE&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="default-folder-structure-cuasi-inmutability">
+<h2>Default folder structure cuasi-inmutability<a class="headerlink" href="#default-folder-structure-cuasi-inmutability" title="Permalink to this headline">¶</a></h2>
+<p>To keep this structure broadly applicable for many different kinds of projects, we think the best approach is to adapt the folders to your project, but be very conservative in changing the default basic structure for all projects. This is what we say cuasi-inmutable.
+Now you have a folder-layout label specifically for your trading development works to add, subtract, rename, or move folders around.</p>
+<p><strong>Be careful and be consistent!</strong></p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="reproducibility.html">Reproducibility is the name of the game</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="structure.html">The resulting directory structure</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Parrondo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+    </div>
+  </body>
+</html>
