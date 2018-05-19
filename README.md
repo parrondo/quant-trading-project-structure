@@ -1,1 +1,0 @@
-# quant-trading-project-structure
