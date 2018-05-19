@@ -195,6 +195,7 @@ Now you have a folder-layout label specifically for your trading development wor
 
 **Be careful and be consistent!**
 
+Don't forget to clone or download the script from here: `quant-trading-project-structure`_
 
 .. _`cookiecutter Python package`: http://cookiecutter.readthedocs.org/en/latest/installation.html
 .. _`Anaconda`: https://conda.io/docs/index.html
@@ -204,4 +205,5 @@ Now you have a folder-layout label specifically for your trading development wor
 .. _`Mesos`: http://mesos.apache.org/
 .. _`Docker Swarm`: https://www.docker.com/products/docker-swarm
 .. _`python-dotenv`: https://github.com/theskumar/python-dotenv
+.. _`quant-trading-project-structure`: https://github.com/parrondo/quant-trading-project-structure
 
