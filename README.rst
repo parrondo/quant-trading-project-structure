@@ -7,4 +7,4 @@ See the page `quant-trading-project-structure`_ for complete history.
 
 LICENSE: BSD
 
-.. _`reproducible-research-doc`: https://parrondo.github.io/quant-trading-project-structure/
+.. _`quant-trading-project-structure`: https://parrondo.github.io/quant-trading-project-structure/
