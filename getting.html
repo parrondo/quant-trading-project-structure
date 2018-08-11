@@ -9,7 +9,7 @@
     <title>Getting started &#8212; quant-trading-project-structure  documentation</title>
     <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -148,12 +148,13 @@ and load data from data/interim.</li>
 <h2>Build from a Conda environment<a class="headerlink" href="#build-from-a-conda-environment" title="Permalink to this headline">¶</a></h2>
 <p>The first step in reproducing an analysis is always reproducing the computational environment it was run in. You need the same tools, the same libraries, and the same versions to make everything play nicely together.
 One effective approach to this is use <a class="reference external" href="https://conda.io/docs/index.html">Anaconda</a>. By listing all of your requirements in the repository (it is include a requirements.txt file) you can easily track the packages needed to recreate the analysis. Here is an example of  good workflow:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">1</span>. $ conda create --name myenv <span class="o">(</span>when creating a new project<span class="o">)</span>
-<span class="m">2</span>. $ <span class="nb">source</span> activate myenv <span class="o">(</span>to activate the environtment<span class="o">)</span>
-<span class="m">3</span>. <span class="o">(</span>myenv<span class="o">)</span>$ pip install the packages that your analysis needs
-<span class="m">4</span>. Run pip freeze &gt; requirements.txt <span class="o">(</span>to pin the exact package versions used to recreate the analysis<span class="o">)</span>
-<span class="m">5</span>. If you find you need to install another package:
-   run pip freeze &gt; requirements.txt again and commit the changes to version control.
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">1</span>. Create an environment.yml file in the project folder. Typically the environment name, ENV_NAME, will be the same as the folder name. At minimum, it will specify the version of Python you want to use.
+<span class="m">2</span>. $ conda env create.
+<span class="m">3</span>. $ <span class="nb">source</span> activate ENV_NAME <span class="o">(</span>to activate the environtment<span class="o">)</span>
+<span class="m">4</span>. <span class="o">(</span>myenv<span class="o">)</span>$ pip install the packages that your analysis needs
+<span class="m">5</span>. Run pip freeze &gt; requirements.txt <span class="o">(</span>to pin the exact package versions used to recreate the analysis<span class="o">)</span>. Update environment.yml with requirements.txt <span class="o">(</span>delete requirements.txt<span class="o">)</span>.
+<span class="m">6</span>. If you find you need to install another package:
+   run pip freeze &gt; requirements.txt again, update environment.yml with requirements.txt <span class="o">(</span>delete requirements.txt<span class="o">)</span>, and commit the changes to version control.
 </pre></div>
 </div>
 <p>Usually you have more complex requirements for recreating your environment, then you should consider a virtual machine based approach such as <a class="reference external" href="https://www.docker.com/">Docker</a> or <a class="reference external" href="https://www.vagrantup.com/">Vagrant</a>. Both of these tools use text-based formats (Dockerfile and Vagrantfile respectively) you can easily add to source control to describe how to create a virtual machine with the requirements you need. Once you are familiarized with this virtual machine techniques, they works like a charm.</p>
@@ -217,7 +218,7 @@ Now you have a folder-layout label specifically for your trading development wor
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Parrondo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
     </div>
   </body>
 </html>

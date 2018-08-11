@@ -137,12 +137,13 @@ One effective approach to this is use `Anaconda`_. By listing all of your requir
 
 .. code-block :: bash
 
-    1. $ conda create --name myenv (when creating a new project)
-    2. $ source activate myenv (to activate the environtment)
-    3. (myenv)$ pip install the packages that your analysis needs 
-    4. Run pip freeze > requirements.txt (to pin the exact package versions used to recreate the analysis)
-    5. If you find you need to install another package:
-       run pip freeze > requirements.txt again and commit the changes to version control. 
+    1. Create an environment.yml file in the project folder. Typically the environment name, ENV_NAME, will be the same as the folder name. At minimum, it will specify the version of Python you want to use.
+    2. $ conda env create.
+    3. $ source activate ENV_NAME (to activate the environtment)
+    4. (myenv)$ pip install the packages that your analysis needs 
+    5. Run pip freeze > requirements.txt (to pin the exact package versions used to recreate the analysis). Update environment.yml with requirements.txt (delete requirements.txt).
+    6. If you find you need to install another package:
+       run pip freeze > requirements.txt again, update environment.yml with requirements.txt (delete requirements.txt), and commit the changes to version control. 
 
 Usually you have more complex requirements for recreating your environment, then you should consider a virtual machine based approach such as `Docker`_ or `Vagrant`_. Both of these tools use text-based formats (Dockerfile and Vagrantfile respectively) you can easily add to source control to describe how to create a virtual machine with the requirements you need. Once you are familiarized with this virtual machine techniques, they works like a charm.
 

@@ -4,6 +4,7 @@ Reproducibility is the name of the game
 
 There are two basic reasons to make your research reproducible. The first is **to show evidence of the correctness of your results**. The second one  is **to enable others to make use of our methods and results**.
 So to achieve it we need to recognize that:
+
  * A well-defined standard project structure means that a newcomer can begin to understand an analysis without having to look into an extensive documentation.
  * It also means that you do not necessarily have to read 100% of the code before you know where to look for very specific things.
  * A well-organized code tends to self-document, since the organization itself provides the context for its code without too much overhead. 
